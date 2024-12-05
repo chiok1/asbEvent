@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  sqlserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sqlserver_dev
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Qwerty123!"
+      DROP_DATABASE: "true" # Set to "true" to drop and recreate the database
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      - ./init-db:/usr/src/app/init-db
+
+volumes:
+  sqlserver_data:
