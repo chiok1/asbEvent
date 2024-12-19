@@ -31,4 +31,6 @@ dotnet new mvc
 dotnet add <dependency>
 ```
 
+API Documentation is available at https://localhost:5072/swagger/index.html
+
 
