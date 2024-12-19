@@ -22,7 +22,7 @@ namespace asbEvent.Controllers
 
         [HttpPost("mark")]
         [Consumes("multipart/form-data")]
-        public IActionResult Mark([FromForm] IFormFile qrCodeImage)
+        public IActionResult Mark(IFormFile qrCodeImage)
         {
             using var memoryStream = new MemoryStream();
             qrCodeImage.CopyTo(memoryStream);
