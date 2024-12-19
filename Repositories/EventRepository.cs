@@ -4,68 +4,37 @@ using asbEvent.DTOs;
 using asbEvent.Interfaces;
 using System.Linq.Expressions;
 
-namespace asbEvent.Repositories
-{
-    public class EventRepository : IRepository<EventRegistration>
-    {
-        private readonly ApplicationDbContext _context;
+namespace asbEvent.Repositories;
 
-        public EventRepository(ApplicationDbContext context)
-        {
-            _context = context;
+public class EventRepository(ApplicationDbContext context) : IRepository<Event> {
+    private readonly ApplicationDbContext _context = context;
+
+    public IEnumerable<Event> GetAll() {
+        return _context.Events;
+    }
+    public Event GetById(long id) {
+        return _context.Events.FirstOrDefault(e => e.Id == id);
+    }
+    public Event Add(Event entity) {
+        _context.Events.Add(entity);
+        _context.SaveChanges(); // Ensure changes are saved to generate the Id
+        return entity; // Return the entity with the generated Id
+    }
+    public void AddRange(IEnumerable<Event> entities) {
+        _context.Events.AddRange(entities);
+    }
+    public void Remove(Event entity) {
+        _context.Events.Remove(entity);
+    }
+    public void RemoveRange(IEnumerable<Event> entities) {
+        _context.Events.RemoveRange(entities);
+        ;
+    }
+    public IEnumerable<Event> Find(Expression<Func<Event, bool>>? predicate) {
+        if (predicate == null) {
+            return _context.Events;
+        } else {
+            return _context.Events.Where(predicate);
         }
-
-        public IEnumerable<EventRegistration> GetAll()
-        {
-            return _context.EventRegistrations;
-        }
-
-        public IEnumerable<EventRegistration> Find(Expression<Func<EventRegistration, bool>>? predicate)
-        {
-            if (predicate == null)
-            {
-                return _context.EventRegistrations;
-            }
-            return _context.EventRegistrations.Where(predicate);
-        }
-
-        public EventRegistration GetById(long id)
-        {
-            return _context.EventRegistrations.FirstOrDefault(c => c.EventId == id);
-        }
-
-        public void Add(EventRegistration entity)
-        {
-            _context.EventRegistrations.Add(entity);
-        }
-
-
-        // public ServiceResult RegisterEvent(EventRegistration eventReg)
-        // {
-        //     try
-        //     {
-        //         _context.EventRegistrations.Add(eventReg);
-        //         _context.SaveChanges();
-        //         return ServiceResult.SuccessResult("0", "Event registered successfully.");
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return ServiceResult.ErrorResult("1", $"Error registering event: {ex.Message}");
-        //     }
-        // }
-        // public bool IsAlreadyRegistered(int eventId, string empId)
-        // {
-        //     return _context.EventRegistrations
-        //                    .Any(reg => reg.EventId == eventId && reg.EmpID == empId);
-        // }
-
-        // public bool IsAlreadyAttended(int eventId, string empId)
-        // {
-        //     return _context.AttendeeDetails
-        //                    .Any(attn => attn.EventId == eventId && attn.EmpID == empId);
-        // }
-
-
     }
 }
-

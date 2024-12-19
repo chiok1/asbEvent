@@ -3,6 +3,8 @@
 # User secrets
 secrets.json
 appsettings.json
+appsettings.Development.json
+tempkey.jwk
 
 *.swp
 *.*~

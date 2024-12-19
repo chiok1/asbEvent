@@ -1,35 +1,24 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+//    using Microsoft.AspNetCore.Mvc;
+//    using asbEvent.Data;
 
-namespace asbEvent.Controllers;
+//    namespace asbEvent.Controllers
+//    {
+//     [Route("api/[controller]")]
+//     [ApiController]
+//     public class DatabaseTestController(ApplicationDbContext context) : ControllerBase
+//       {
+//          private readonly ApplicationDbContext _context = context;
 
-[ApiController]
-[Route("api/[controller]")]
-public class DatabaseTestController : ControllerBase
-{
-    private readonly IConfiguration _configuration;
-
-    public DatabaseTestController(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
-    [HttpGet("test-connection")]
-    public IActionResult TestConnection()
-    {
-        string connectionString = _configuration.GetConnectionString("DefaultConnection");
-
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            try
-            {
-                connection.Open();
-                return Ok("Connection successful!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Connection failed: {ex.Message}");
-            }
-        }
-    }
-}
+//         [HttpGet("test-database")]
+//          public IActionResult DatabaseTest()
+//          {
+//             try {
+//                 var events = _context.EventRegistrations.ToList();
+//                 return Ok(events);
+//             } catch (Exception e) {
+//                 return BadRequest(e.Message);
+//             }
+            
+//          }
+//       }
+//    }

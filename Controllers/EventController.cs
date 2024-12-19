@@ -14,16 +14,20 @@ namespace asbEvent.Controllers
         private readonly IEventService _eventService = eventService;
 
         [HttpPost("register-event")]
-        public IActionResult RegisterEvent(EventRegistration eventReg)
+        public IActionResult RegisterEvent(RegisterEventDTO registerEventDTO)
         {
-            ServiceResult result = _eventService.RegisterEvent(eventReg);
+            ServiceResult result = _eventService.RegisterEvent(registerEventDTO);
             return Ok(result);
         }
 
         [HttpPost("mark")]
-        public IActionResult Mark(MarkAttendanceDTO markAttendanceDTO)
+        [Consumes("multipart/form-data")]
+        public IActionResult Mark([FromForm] IFormFile qrCodeImage)
         {
-            ServiceResult result = _eventService.Mark(markAttendanceDTO);
+            using var memoryStream = new MemoryStream();
+            qrCodeImage.CopyTo(memoryStream);
+            byte[] imageBytes = memoryStream.ToArray();
+            ServiceResult result = _eventService.Mark(imageBytes);
             return Ok(result);
         }
 

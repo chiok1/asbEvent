@@ -1,15 +1,27 @@
-namespace asbEvent.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace asbEvent.Models;
+
+public partial class EventRegistration
 {
-    public partial class EventRegistration
-    {
-        public int EventId { get; set; }
-        public required string EmployeeName { get; set; }
-        public required string EmpID { get; set; }
-        public required string Company { get; set; }
-        public required string Location { get; set; }
-        public required string EmployeeEmail { get; set; }
-        public required string Country { get; set; }
-        public required DateTime RegistrationDate { get; set; }
-        public DateTime? AttendanceDate { get; set; }
-    }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
+
+    public long AttendeeId { get; set; }
+
+    public long EventId { get; set; }
+
+    public DateTime EventDate { get; set; }
+
+    public DateTime RegistrationTime { get; set; }
+
+    public DateTime? AttendedTime { get; set; }
+
+    public string Qrcode { get; set; } = null!;
+
+    public virtual Attendee Attendee { get; set; } = null!;
+
+    public virtual Event Event { get; set; } = null!;
 }

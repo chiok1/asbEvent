@@ -5,8 +5,8 @@ namespace asbEvent.Interfaces
 {
     public interface IEventService
     {
-        ServiceResult RegisterEvent(EventRegistration eventReg);
-        ServiceResult Mark(MarkAttendanceDTO markAttendanceDTO);
+        ServiceResult RegisterEvent(RegisterEventDTO registerEventDTO);
+        ServiceResult Mark(byte[] qrCodeImage);
         // string SendReminder(string eventId);
         // string GetEvents();
         // string GetDate();
